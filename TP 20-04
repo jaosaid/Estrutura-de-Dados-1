@@ -1,0 +1,127 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Funcionario
+{
+    int prontuario;
+    string nome;
+    double salario;
+};
+
+vector<Funcionario> funcionarios;
+
+void incluir()
+{
+    Funcionario novo;
+    cout << "Prontuario: ";
+    cin >> novo.prontuario;
+    
+    for (auto& f : funcionarios)
+    {
+        if (f.prontuario == novo.prontuario)
+        {
+            cout << "Já existe um funcionário com este prontuário" << endl;
+            return;
+        }
+    }
+
+    cout << "Nome: ";
+    cin >> novo.nome;
+    cout << "Salario: ";
+    cin >> novo.salario;
+    funcionarios.push_back(novo);
+    cout << "Funcionário cadastrado com sucesso!" << endl;
+}
+
+void excluir()
+{
+    int prontuario;
+    cout << "Digite o prontuário do funcionário a ser excluído: ";
+    cin >> prontuario;
+
+    for (auto it = funcionarios.begin(); it != funcionarios.end(); it++)
+    {
+        if (it->prontuario == prontuario)
+        {
+            funcionarios.erase(it);
+            cout << "Funcionário excluído com sucesso!" << endl;
+            return;
+        }
+    }
+
+    cout << "Não foi encontrado um funcionário com o prontuário informado" << endl;
+}
+
+void pesquisar()
+{
+    int prontuario;
+    cout << "Digite o prontuário do funcionário a ser pesquisado: ";
+    cin >> prontuario;
+
+    for (auto& f : funcionarios)
+    {
+        if (f.prontuario == prontuario)
+        {
+            cout << "Prontuário: " << f.prontuario << endl;
+            cout << "Nome: " << f.nome << endl;
+            cout << "Salário: " << f.salario << endl;
+            return;
+        }
+    }
+
+    cout << "Não foi encontrado um funcionário com o prontuário informado" << endl;
+}
+
+void listar()
+{
+    double totalSalarios = 0;
+    for (auto& f : funcionarios)
+    {
+        cout << "Prontuário: " << f.prontuario << endl;
+        cout << "Nome: " << f.nome << endl;
+        cout << "Salário: " << f.salario << endl;
+        totalSalarios += f.salario;
+    }
+    cout << "Total de salários: " << totalSalarios << endl;
+}
+
+int main()
+{
+    int opcao;
+    while (true)
+    {
+        cout << endl;
+        cout << "Escolha uma opcao:" << endl;
+        cout << "0. Sair" << endl;
+        cout << "1. Incluir" << endl;
+        cout << "2. Excluir" << endl;
+        cout << "3. Pesquisar" << endl;
+        cout << "4. Listar" << endl;
+        cin >> opcao;
+
+        switch (opcao)
+        {
+            case 0:
+                return 0;
+            case 1:
+                incluir();
+                break;
+            case 2:
+                excluir();
+                break;
+            case 3:
+                pesquisar();
+                break;
+            case 4:
+                listar();
+                break;
+            default:
+                cout << "Opção inválida" << endl;
+        }
+    }
+
+    return 0;
+}
